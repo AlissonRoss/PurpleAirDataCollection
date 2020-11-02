@@ -1,7 +1,10 @@
 //IMPORTS
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //MAIN
@@ -11,17 +14,21 @@ public class DataAnalysis {
 
     public static void main(String[] args) {
         Scanner input = null;
+        String name=null;
+        do{
+            name = JOptionPane.showInputDialog("Enter Name of the Spreadsheet:");
+        }while(name==null || name=="");
         try {
-            input = new Scanner(new File("KMCE.csv")); //looks for file
+            input = new Scanner(new File(name+".csv")); //looks for file
         } catch (FileNotFoundException e) {
-            System.out.println("file not found"); //if file not found then it is caught and 'file not found' prints
+            JOptionPane.showMessageDialog(null,name+".csv is not found in the project directory"); //if file not found then it is caught and 'file not found' prints
             e.printStackTrace();
         }
-
+        int linesToSkip = Integer.parseInt(JOptionPane.showInputDialog("Enter the amount of lines to skip:"));
         //to read in the 8 header lines of the text file
         //we do not need the 8 header lines read
         int count = 0;
-        while(count++ < 8) {
+        while(count++ < linesToSkip) {
             input.nextLine();
         }
         //this gets the input and assigns each record onto the dataset
